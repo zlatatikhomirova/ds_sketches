@@ -16,6 +16,7 @@
 
 import torch
 from torch import nn 
+from sklearn.model_selection import train_test_split
 
 # Check PyTorch version
 print("PyTorch version", torch.__version__)
@@ -41,5 +42,25 @@ test
   - ~10-20%	исходных данных
   - обязательная часть разбиения
 """
-
+def split_data(data: torch.Tensor, 
+               train_size: float|None=None, 
+               valid_split: float|None=None,
+               test_size: float|None=None,
+               random_state: int=42) -> tuple[torch.Tensor]:
+  """
+  """
+  if train_size == None:
+    assert test_size != None, "test and train sizes are not specified."
+  else:
+    test_size = round(1 - train_size, 4)
+  X_train, X_test, y_train, y_test = train_test_split(data,
+                                                      test_size=test_size,
+                                                      random_state=random_state)
+  if valid_split:
+    X_valid, X_test, y_valid, y_test = train_test_split(data,
+                                                        test_size=valid_split,
+                                                        random_state=random_state)
+    return X_train, X_vaild, X_test, y_train, y_valid, y_test
+  return X_train, X_test, y_train, y_test
+                 
 ## 2. Построение модели
