@@ -5,7 +5,7 @@ def train_one_epoch():
     last_loss = 0.
     dec = int(log10(len(training_loader)))
     if not dec:
-        dec =1
+        dec = 1
     for i, data in enumerate(training_loader):
         inputs, labels = data
         optimizer.zero_grad()
@@ -46,7 +46,7 @@ for epoch in range(EPOCHS):
 
     avg_vloss = running_vloss / (i + 1)
     valid_loss.append(avg_vloss)
-    train:_loss.append(avg_loss)
+    train_loss.append(avg_loss)
     
     for metric in metrics:
         # tuple(name, F.loss_fn) : list
